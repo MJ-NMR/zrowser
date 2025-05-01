@@ -12,20 +12,31 @@ class Url {
 		const clint = net.connect({host: this.host, port: this.port}, () => {
 			clint.on('connect', () => console.log('connected'))
 		});
-
-		let respond;
+		let respond = '';
 		let request = `GET ${this.path} HTTP/1.0\r\n`;
-        request += `Host: ${this.host}\r\n`;
-        request += "\r\n";
-        console.log(request);
+		request += `Host: ${this.host}\r\n`;
+		request += "\r\n";
+		clint.write(request);
+		clint.on('data', (data) => {
+			respond += data;
+		});
+		clint.on('end', () => {
+			this.handleRespons(respond);
+		});
+	}
 
-        clint.write(request);
-        clint.on('data', (data) => {
-        	console.log(data.toString());
-        	respond += data;
-        });
+	handleRespons(res) {
+		let [header, body] = res.split('\r\n\r\n');
+		header = header.split('\r\n');
+		const st = header.shift();
+		const headers = {};
+		header.forEach((line) => {
+			headers[line.split(':')[0]] = line.split(': ')[1];
+		});
+		const size = Number(headers['Content-Length']);	
+		console.log(headers);
 	}
 }
 
-const google = new Url('http://localhost');
-google.request();
+const local = new Url('http://localhost');
+local.request();
