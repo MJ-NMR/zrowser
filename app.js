@@ -1,25 +1,40 @@
-const net = require('node:net')
+const net = require('node:net');
+const tls = require('tls');
 
 class browser {
 	constructor(url) {
 		[this.schema, url] = url.split('://');
 		[this.host, this.path] = url.split('/', 1);
 		this.path = (this.path) ? '/' + this.path : '/';
-		this.port = 80;
+		[this.host, this.port] = this.host.split(':');
 		this.headers = {};
 		this.body = null;
 		this.content = '';
 	}
 
 	request() {
-		const clint = net.connect({host: this.host, port: this.port}, () => {
-			clint.on('connect', () => console.log('connected'))
-		});
+		let clint;
+		const port = this.port || (this.schema === 'https' ? 443 : 80);
+		if(this.schema === 'https') {
+			clint = tls.connect({
+				host: this.host,
+				port: port,
+				servername: this.host,
+				rejectUnauthorized: true
+			});
+		} else {		
+			clint = net.connect({host: this.host, port: port}); 
+		}
 		let respond = '';
-		let request = `GET ${this.path} HTTP/1.0\r\n`;
+		let request = `GET ${this.path} HTTP/1.1\r\n`;
 		request += `Host: ${this.host}\r\n`;
+		request += `Connection: close\r\n`;  // <- force server to close
 		request += "\r\n";
-		clint.write(request);
+		clint.setEncoding('utf8');
+		clint.on(this.schema === 'https' ? 'secureConnect' : 'connect', () => {
+			console.log('connected');
+			clint.write(request);
+		});
 		clint.on('data', (data) => {
 			respond += data;
 		});
@@ -27,10 +42,12 @@ class browser {
 			this.handleResponse(respond);
 			this.show();
 		});
+		clint.on('error', (error) => {
+			console.log(error);
+		});
 	}
 
 	handleResponse(res) {
-		console.log(res.split('\r\n\r\n'));
 		let header, body;
 		[ header, body] = res.split('\r\n\r\n');
 		this.body = body;
@@ -57,7 +74,7 @@ class browser {
 		console.log(this.content);
 	}
 }
-
-const local = new browser('http://localhost');
+const url = process.argv[2];
+const local = new browser(url);
 local.request();
 //local.show();
