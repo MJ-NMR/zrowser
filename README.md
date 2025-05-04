@@ -16,7 +16,7 @@
 
 ## 📦 Installation
 
-### Option 1: From GitHub Releases (recommended)
+### From GitHub Releases (recommended)
 
 1. Go to the [Releases page](https://github.com/MJ-NMR/Zrowser/releases)
 2. Download the binary for your system
