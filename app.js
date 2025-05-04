@@ -74,7 +74,11 @@ class browser {
 		console.log(this.content);
 	}
 }
-const url = process.argv[2];
-const local = new browser(url);
-local.request();
-//local.show();
+
+if(process.argv[2]) {
+	const url = process.argv[2];
+	const local = new browser(url);
+	local.request();
+} else {
+	console.log('zrowser URl \n  OR \nnode app.js URL');
+};
