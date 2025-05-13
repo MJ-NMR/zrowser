@@ -15,8 +15,8 @@ class Url {
 		this.port = port || (this.schema === 'https' ? 443 : 80);
 	}
 }
-const request = async (url) => {
-	console.log(url);
+const request = async (url, redirectCount = 0) => {
+	if(redirectCount > 10) throw new Error('Too many redirects');
 	let clint;
 	const port = url.port; 
 	let respond = '';
@@ -62,28 +62,38 @@ const request = async (url) => {
 		clint.setEncoding('utf8');
 		clint.write(request);
 		clint.on('data', (data) => {
-			console.log('Received chunk:', data);
 			respond += data;
 		});
 		clint.on('end', () => {
-			resolve( [ 'html', respond ] );
+			resolve(respond);
 		});
 		clint.on('error', (error) => {
 			reject(error);
 		});
 	});
-	return data;
+	return handleResponse(data, url, redirectCount);
 };
 
-const handleResponse = (res) => {
+const handleResponse = (res, url, redirectCount) => {
 	let header, body;
 	[ header, body] = res.split('\r\n\r\n');
 	header = header.split('\r\n');
-	const st = header.shift();
+	const st = header.shift().split(" ");
 	const headers = {};
 	header.forEach((line) => {
 		headers[line.split(':')[0]] = line.split(': ')[1];
 	});
+	const stcode = Number( st[1] );
+	
+	if(stcode >= 300 && stcode <= 308) {
+		if(headers.Location.startsWith('/')) {
+			url.path = headers.Location; 
+		} else {
+			url = new Url(headers.Location);
+		}
+		console.log('redirect to:', url);
+		return request(url, redirectCount + 1);
+	}
 	return [ [ st, headers ], body];
 }
 

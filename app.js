@@ -1,4 +1,4 @@
-const { request, Url, handleResponse } = require('./request.js');
+const { request, Url} = require('./request.js');
 
 class browser {
 	constructor(){
@@ -11,23 +11,21 @@ class browser {
 		if(this.cash[url.fullUrl]) this.show(this.cash[url.fullUrl][2])
 		else {
 			let response = await request(url);
-			if(response[0] === 'html') {
-				response[1] = handleResponse(response[1]);
-			}
 			this.cash[url.fullUrl] = response;
 			this.show(response);
 		}	
 	}
 
 	show(res) {
-		let tag = false;
-		let char;
 		let data = res[1];
 		if(!data) throw new Error("there are no body or data");
 		if(res[0] !== 'text') {
+			let row = res[1];
 			data = '';
-			for(let i = 0; i < data.length; i++) {
-				char = this.body[i];
+			let tag = false;
+			let char;
+			for(let i = 0; i < row.length; i++) {
+				char = row[i];
 				if(char === '<') tag = true;
 				if(!tag) data += char;
 				if(char === '>') tag = false;
