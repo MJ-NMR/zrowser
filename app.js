@@ -2,16 +2,16 @@ const { request, Url} = require('./request.js');
 
 class browser {
 	constructor(){
-		this.cash = {};
+		this.cashe = {};
 		this.cookies = {};
 	} 
 
 	async run(urlStr) {
 		const url = new Url(urlStr);
-		if(this.cash[url.fullUrl]) this.show(this.cash[url.fullUrl][2])
+		if(this.cashe[url.fullUrl]) this.show(this.cashe[url.fullUrl][2])
 		else {
 			let response = await request(url);
-			this.cash[url.fullUrl] = response;
+			this.cashe[url.fullUrl] = response;
 			this.show(response);
 		}	
 	}
@@ -36,9 +36,17 @@ class browser {
 }
 
 const local = new browser();
-if(process.argv[2]) {
-	const urlStr = process.argv[2];
-	local.run(urlStr);
-} else {
-	console.log('zrowser URl \n  OR \nnode app.js URL');
-};
+async function app() {
+	process.stdin.setEncoding('utf8');
+	process.stdout.write("Enter a URL: ");
+	process.stdin.on('data', async  (input) => {
+		if(input.trim() == 'exit') process.exit();
+		try {
+			await local.run(input.trim());
+		} catch (error) {
+			console.log(error);	
+		}	
+	})	
+}
+
+app();

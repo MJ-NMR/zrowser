@@ -6,7 +6,8 @@ class Url {
 	constructor(urlStr) {
 		this.fullUrl = urlStr;
 		let rest;
-		[this.schema, rest] = urlStr.split('://');
+		if(urlStr.includes('://')) [this.schema, rest] = urlStr.split('://');
+		else [ this.schema, rest ] = [ 'https', urlStr ];
 		let hostAndPath = rest.split('/');
 		this.host = hostAndPath.shift(); // First item is host:port
 		this.path = '/' + hostAndPath.join('/'); // Recombine rest as path
@@ -33,7 +34,7 @@ const request = async (url, redirectCount = 0) => {
 
 	if(url.schema === 'https') {
 		clint = await new Promise((resolve) => {
-			socket =  tls.connect({
+			const socket =  tls.connect({
 				host: url.host,
 				port: port,
 				servername: url.host,
@@ -61,8 +62,8 @@ const request = async (url, redirectCount = 0) => {
 		request += "\r\n";
 		clint.setEncoding('utf8');
 		clint.write(request);
-		clint.on('data', (data) => {
-			respond += data;
+		clint.on('data', (chunk) => {
+			respond += chunk;
 		});
 		clint.on('end', () => {
 			resolve(respond);
