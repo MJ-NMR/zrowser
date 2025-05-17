@@ -87,10 +87,11 @@ const handleResponse = (res, url, redirectCount) => {
 	const stcode = Number( st[1] );
 	
 	if(stcode >= 300 && stcode <= 308) {
-		if(headers.Location.startsWith('/')) {
-			url.path = headers.Location; 
+		const location = headers.location || headers.location;
+		if(location.startsWith('/')) {
+			url.path = location; 
 		} else {
-			url = new Url(headers.Location);
+			url = new Url(location);
 		}
 		console.log('redirect to:', url);
 		return request(url, redirectCount + 1);

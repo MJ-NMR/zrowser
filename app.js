@@ -8,7 +8,7 @@ class browser {
 
 	async run(urlStr) {
 		const url = new Url(urlStr);
-		if(this.cashe[url.fullUrl]) this.show(this.cashe[url.fullUrl][2])
+		if(this.cashe[url.fullUrl]) this.show(this.cashe[url.fullUrl])
 		else {
 			let response = await request(url);
 			this.cashe[url.fullUrl] = response;
@@ -43,6 +43,7 @@ async function app() {
 		if(input.trim() == 'exit') process.exit();
 		try {
 			await local.run(input.trim());
+			process.stdout.write("Enter a URL: ");
 		} catch (error) {
 			console.log(error);	
 		}	
