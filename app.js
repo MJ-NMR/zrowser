@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { request, Url} = require('./request.js');
 
 class browser {

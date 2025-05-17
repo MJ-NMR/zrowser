@@ -18,9 +18,23 @@
 
 ### From GitHub Releases (recommended)
 
-1. Go to the [Releases page](https://github.com/MJ-NMR/Zrowser/releases)
+1. Go to the [Releases page](https://github.com/MJ-NMR/zrowser/releases)
 2. Download the binary for your system
 3. Make it executable (if on Linux/macOS):
    ```bash
    chmod +x zrowser
    ./zrowser
+
+### directly from the repo (demo)
+1. clone the repo
+    ```bash
+    git clone https://github.com/MJ-NMR/zrowser.git
+    ```
+2. install the dependenses 
+    ```bash 
+    npm install
+    ```
+3. run the app
+    ```bash
+    npm start
+    ```

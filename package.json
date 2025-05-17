@@ -1,16 +1,21 @@
 {
   "name": "zrowser",
   "version": "1.2.1",
-  "description": "semple browser using nodeJS",
+  "description": "simple browser using nodeJS",
+  "bin": "app.js",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/NJ-NMR/browser"
+    "url": "https://github.com/MJ-NMR/browser"
   },
   "author": "Zaater",
-  "license": "ISC"
+  "license": "ISC",
+  "pkg": {
+    "assets": [],
+    "scripts": []
+  }
 }
+
