@@ -8,15 +8,27 @@
 </head>
 <body>
     <div class="logo-container">
-        </svg>
 		<img class="leaf-icon" src="herb.svg" alt="Icon" width="90" height="90">
         <h1 class="logo-text">Zrowser</h1>
     </div>
     
     <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search" id="searchInput">
+        <input type="text" class="search-bar" placeholder="Search the web..." id="searchInput">
+        <button class="search-button" onclick="performSearch()">
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
     </div>
     
+    <div class="quick-links">
+        <a href="#" class="quick-link">Gmail</a>
+        <a href="#" class="quick-link">News</a>
+        <a href="#" class="quick-link">Images</a>
+        <a href="#" class="quick-link">Videos</a>
+        <a href="#" class="quick-link">Shopping</a>
+    </div>
+	<div id='view'></div>
     <script src="script.js"></script>
 </body>
 </html>

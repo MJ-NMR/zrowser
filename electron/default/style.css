@@ -38,6 +38,12 @@ body {
     animation: fadeInDown 1s ease-out;
 }
 
+.leaf-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
 
 .logo-text {
     font-size: 3.5rem;
@@ -56,7 +62,7 @@ body {
 
 .search-bar {
     width: 100%;
-    padding: 18px 24px;
+    padding: 18px 60px 18px 24px;
     font-size: 18px;
     border: 2px solid var(--current-line);
     border-radius: 8px;
@@ -79,6 +85,88 @@ body {
     font-weight: 300;
 }
 
+.search-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--purple);
+    border: none;
+    border-radius: 6px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.search-button:hover {
+    background: var(--pink);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    stroke: var(--background);
+}
+
+.quick-links {
+    margin-top: 50px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeIn 1s ease-out 0.6s both;
+}
+
+.quick-link {
+    background: var(--current-line);
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--foreground);
+    font-weight: 400;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.quick-link:hover {
+    background: var(--selection);
+    border-color: var(--purple);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    color: var(--purple);
+}
+
+.quick-link:nth-child(1):hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.quick-link:nth-child(2):hover {
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+.quick-link:nth-child(3):hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+}
+
+.quick-link:nth-child(4):hover {
+    border-color: var(--pink);
+    color: var(--pink);
+}
+
+.quick-link:nth-child(5):hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
 
 @keyframes fadeInDown {
     from {
@@ -116,10 +204,18 @@ body {
         font-size: 2.5rem;
     }
     
+    .leaf-icon {
+        width: 45px;
+        height: 45px;
+    }
     
     .search-container {
         max-width: 90%;
         margin: 0 20px;
     }
     
+    .quick-links {
+        gap: 15px;
+        margin: 30px 20px 0;
+    }
 }

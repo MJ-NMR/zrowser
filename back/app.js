@@ -10,11 +10,11 @@ class browser {
 
 	async run(urlStr) {
 		const url = new Url(urlStr);
-		if(this.cashe[url.fullUrl]) this.show(this.cashe[url.fullUrl])
+		if(this.cashe[url.fullUrl]) return this.cashe[url.fullUrl];
 		else {
 			let response = await request(url);
 			this.cashe[url.fullUrl] = response;
-			this.show(response);
+			return response;
 		}	
 	}
 
@@ -38,14 +38,17 @@ class browser {
 }
 
 module.exports = { browser }
+/*
+// cli 
 const local = new browser();
-/*async function app() {
+async function app() {
 	process.stdin.setEncoding('utf8');
 	process.stdout.write("Enter a URL: ");
 	process.stdin.on('data', async  (input) => {
 		if(input.trim() == 'exit') process.exit();
 		try {
-			await local.run(input.trim());
+			const res = local.run(input.trim());
+			local.show(res);
 			process.stdout.write("Enter a URL: ");
 		} catch (error) {
 			console.log(error);	
