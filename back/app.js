@@ -37,8 +37,9 @@ class browser {
 	}
 }
 
+module.exports = { browser }
 const local = new browser();
-async function app() {
+/*async function app() {
 	process.stdin.setEncoding('utf8');
 	process.stdout.write("Enter a URL: ");
 	process.stdin.on('data', async  (input) => {
@@ -53,3 +54,4 @@ async function app() {
 }
 
 app();
+*/ 

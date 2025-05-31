@@ -1,0 +1,125 @@
+/* Dracula Color Theme */
+:root {
+    --background: #282a36;
+    --current-line: #44475a;
+    --selection: #44475a;
+    --foreground: #f8f8f2;
+    --comment: #6272a4;
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--foreground);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    animation: fadeInDown 1s ease-out;
+}
+
+
+.logo-text {
+    font-size: 3.5rem;
+    font-weight: 300;
+    letter-spacing: -2px;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    color: var(--purple);
+}
+
+.search-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 18px 24px;
+    font-size: 18px;
+    border: 2px solid var(--current-line);
+    border-radius: 8px;
+    background: var(--current-line);
+    color: var(--foreground);
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.search-bar:focus {
+    border-color: var(--purple);
+    background: var(--selection);
+    box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.2), 0 12px 40px rgba(0,0,0,0.4);
+    transform: translateY(-2px);
+}
+
+.search-bar::placeholder {
+    color: var(--comment);
+    font-weight: 300;
+}
+
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 2.5rem;
+    }
+    
+    
+    .search-container {
+        max-width: 90%;
+        margin: 0 20px;
+    }
+    
+}

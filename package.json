@@ -1,11 +1,12 @@
 {
   "name": "zrowser",
-  "version": "1.2.1",
+  "version": "2.2.1",
   "description": "simple browser using nodeJS",
   "bin": "app.js",
-  "main": "app.js",
+  "main": "electron/main.js",
   "scripts": {
-    "start": "node app.js"
+    "cli": "node back/app.js",
+	"start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -16,6 +17,8 @@
   "pkg": {
     "assets": [],
     "scripts": []
+  },
+  "dependencies": {
+    "electron": "^36.3.2"
   }
 }
-
