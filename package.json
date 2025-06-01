@@ -6,7 +6,7 @@
   "main": "electron/main.js",
   "scripts": {
     "cli": "node back/app.js",
-	"start": "electron ."
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "scripts": []
   },
   "dependencies": {
-    "electron": "^36.3.2"
+    "electron": "^36.3.2",
+    "jsdom": "^26.1.0"
   }
 }

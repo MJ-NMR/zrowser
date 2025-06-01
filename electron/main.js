@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('path');
-const back = require('../back/app.js');
-const browser = new back.browser()
+const { getRequestBody }= require('../back/request.js');
+const fs = require('fs');
+const crypto = require('crypto');
 
-const createWindow = () => {
+const createWindow = (tempPath = 'electron/default/index.html' ) => {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 600,
@@ -11,18 +12,28 @@ const createWindow = () => {
 			preload : path.join(__dirname, 'preload.js')
 		},
 	});
-	win.loadFile('electron/default/index.html');
+	win.loadFile(tempPath);
 }
 
 app.whenReady().then(() => {
 	ipcMain.handle('browser:run', async (_event, urlStr) => {
+
 		console.log('main handler');
+		const hash = crypto.createHash('sha256').update(urlStr).digest('hex');
+		const cashepath = path.join(__dirname, `default/temp/${urlStr}.html`);
+		let tempPath;
+
+		if(fs.existsSync(cashepath)) tempPath = cashepath;
 		try {
-		const res =  await browser.run(urlStr);
-		return res;
+			const res =  await getRequestBody(urlStr);
+			tempPath = path.join(__dirname, `default/temp/${hash}.html`)
+			console.log(tempPath);
+			fs.writeFileSync(tempPath, res)
 		} catch (err) {
-			return 'error in browser'
+			console.log(err);
 		}
+
+		createWindow(tempPath);
 	});
 	createWindow();
 	app.on('activate', () => {

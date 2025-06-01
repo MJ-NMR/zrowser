@@ -3,8 +3,7 @@ async function performSearch() {
     if (query) {
         // In a real browser, this would perform the actual search
         //window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-		const html = await window.browser.run(query);
-		document.getElementById('view').innerHTML = html[1];
+		await window.browser.run(query);
     }
 }
 
